@@ -34,7 +34,6 @@ public class EmployeePayrollServiceTest {
     public void givenEmployeePayrollInDB_WhenRetrieved_ShouldMatchEmployeeCount() {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
         List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
-        employeePayrollData.forEach(System.out::println);
         Assertions.assertEquals(3, employeePayrollData.size());
     }
 
@@ -44,6 +43,14 @@ public class EmployeePayrollServiceTest {
         List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
         employeePayrollService.updateEmployeeSalary("Terisa", 3000000.0);
         boolean result = employeePayrollService.checkEmployeePayRollSyncWithDB("Terisa");
-        Assertions.assertEquals(true, result);
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    void givenDateRangeToEmployeePayRollInDB_WhenRetrieved_ShouldMatchFilteredEmployeeCount() {
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
+        List<EmployeePayrollData> filteredResult = employeePayrollService.readDateRangeDBPayrollData("2018-01-01", "2019-12-22");
+        Assertions.assertEquals(2, filteredResult.size());
     }
 }

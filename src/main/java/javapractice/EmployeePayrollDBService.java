@@ -97,4 +97,16 @@ public class EmployeePayrollDBService {
         return 0;
     }
 
+    public List<EmployeePayrollData> getFilteredDateRangeResult(String dateBefore, String dateAfter) {
+        String sql = String.format("select * from employee_payroll where start between '%s' and '%s';",dateBefore,dateAfter);
+        List<EmployeePayrollData> employeePayrollDataList = new ArrayList<>();
+        try (Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            employeePayrollDataList = this.getEmployeePayRollData(resultSet);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return employeePayrollDataList;
+    }
 }

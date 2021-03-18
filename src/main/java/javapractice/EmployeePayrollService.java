@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class EmployeePayrollService {
+
     public enum IOService {CONSOLE_IO, FILE_IO, DB_IO, REST_IO}
     private List<EmployeePayrollData> employeePayrollList;
     private static EmployeePayrollDBService employeePayrollDBService;
@@ -66,17 +67,20 @@ public class EmployeePayrollService {
     }
 
     private EmployeePayrollData getEmployeePayRollData(String name) {
-        for (EmployeePayrollData data : employeePayrollList) {
-            if (data.name.equals(name))
-                return data;
-        }
-        return null;
+        return this.employeePayrollList.stream()
+                .filter(e -> e.name.equals(name))
+                .findFirst().orElse(null);
     }
 
     public boolean checkEmployeePayRollSyncWithDB(String name) {
         List<EmployeePayrollData>employeePayrollDataList= employeePayrollDBService.getEmployeePayRollData(name);
         return employeePayrollDataList.get(0).equals(getEmployeePayRollData(name));
     }
+
+    public List<EmployeePayrollData> readDateRangeDBPayrollData(String dateBefore, String dateAfter) {
+        return employeePayrollDBService.getFilteredDateRangeResult(dateBefore, dateAfter);
+    }
+
 
     public static void main(String[] args) {
         ArrayList<EmployeePayrollData> employeePayrollDataArrayList = new ArrayList<>();
