@@ -7,10 +7,14 @@ import java.util.Scanner;
 public class EmployeePayrollService {
     public enum IOService {CONSOLE_IO, FILE_IO, DB_IO, REST_IO}
     private List<EmployeePayrollData> employeePayrollList;
+    private static EmployeePayrollDBService employeePayrollDBService;
 
-    public EmployeePayrollService() {}
+    public EmployeePayrollService() {
+        employeePayrollDBService = EmployeePayrollDBService.getInstance();
+    }
 
     public EmployeePayrollService(List<EmployeePayrollData> employeePayrollList){
+        this();
         this.employeePayrollList = employeePayrollList;
     }
 
@@ -50,8 +54,28 @@ public class EmployeePayrollService {
 
     public List<EmployeePayrollData> readDBEmployeePayrollData(IOService ioService) {
         if (ioService.equals(IOService.DB_IO))
-            this.employeePayrollList = new EmployeePayrollDBService().readData();
+            this.employeePayrollList = employeePayrollDBService.readData();
         return employeePayrollList;
+    }
+
+    public void updateEmployeeSalary(String name, double salary) {
+        int result = employeePayrollDBService.updateEmployeeData(name,salary);
+        if (result == 0) return;
+        EmployeePayrollData employeePayrollData = this.getEmployeePayRollData(name);
+        if (employeePayrollData != null) employeePayrollData.salary= salary;
+    }
+
+    private EmployeePayrollData getEmployeePayRollData(String name) {
+        for (EmployeePayrollData data : employeePayrollList) {
+            if (data.name.equals(name))
+                return data;
+        }
+        return null;
+    }
+
+    public boolean checkEmployeePayRollSyncWithDB(String name) {
+        List<EmployeePayrollData>employeePayrollDataList= employeePayrollDBService.getEmployeePayRollData(name);
+        return employeePayrollDataList.get(0).equals(getEmployeePayRollData(name));
     }
 
     public static void main(String[] args) {
