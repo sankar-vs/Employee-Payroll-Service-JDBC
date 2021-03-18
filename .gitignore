@@ -3,8 +3,9 @@
 build
 gradle
 src/main/resources
-src/test
+src/test/resources
 build.gradle
 gradlew
 gradlew.bat
 settings.gradle
+src/main/java/javapractice/DBDemo.java
