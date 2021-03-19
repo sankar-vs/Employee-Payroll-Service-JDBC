@@ -82,6 +82,11 @@ public class EmployeePayrollService {
     }
 
 
+    public double filterDBPayrollData(String gender) {
+        return employeePayrollDBService.getAverageSalaryGroupByGender(gender);
+    }
+
+
     public static void main(String[] args) {
         ArrayList<EmployeePayrollData> employeePayrollDataArrayList = new ArrayList<>();
         EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollDataArrayList);

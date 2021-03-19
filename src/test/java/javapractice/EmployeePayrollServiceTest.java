@@ -53,4 +53,12 @@ public class EmployeePayrollServiceTest {
         List<EmployeePayrollData> filteredResult = employeePayrollService.readDateRangeDBPayrollData("2018-01-01", "2019-12-22");
         Assertions.assertEquals(2, filteredResult.size());
     }
+
+    @Test
+    void givenPayrollData_WhenAverageSalaryRetrievedByGender_ShouldReturnProperValue() {
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
+        double average = employeePayrollService.filterDBPayrollData("M");
+        Assertions.assertEquals(2500000, average);
+    }
 }

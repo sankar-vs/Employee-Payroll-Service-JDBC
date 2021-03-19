@@ -109,4 +109,19 @@ public class EmployeePayrollDBService {
         }
         return employeePayrollDataList;
     }
+
+    public double getAverageSalaryGroupByGender(String gender) {
+        String sql = String.format("select avg(salary) from employee_payroll where gender = '%s'", gender);
+        double result = 0;
+        try (Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                result = resultSet.getDouble("avg(salary)");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
+    }
 }
