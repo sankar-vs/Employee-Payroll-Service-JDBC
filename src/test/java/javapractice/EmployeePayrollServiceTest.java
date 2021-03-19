@@ -37,7 +37,7 @@ public class EmployeePayrollServiceTest {
     public void givenEmployeePayrollInDB_WhenRetrieved_ShouldMatchEmployeeCount() {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
         List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
-        Assertions.assertEquals(9, employeePayrollData.size());
+        Assertions.assertEquals(5, employeePayrollData.size());
     }
 
     @Test
@@ -60,8 +60,8 @@ public class EmployeePayrollServiceTest {
     void givenPayrollData_WhenAverageSalaryRetrievedByGender_ShouldReturnProperTable() {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
         Map<String, Double> result = employeePayrollService.filterDBPayrollData();
-        Assertions.assertEquals(2500000.0, result.get("M"));
-        Assertions.assertEquals(3333333.3333333335, result.get("F"));
+        Assertions.assertEquals(3333333.3333333335, result.get("M"));
+        Assertions.assertEquals(4500000.0, result.get("F"));
     }
 
     @Test
