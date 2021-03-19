@@ -11,3 +11,5 @@
 #### Ability to retrieve all employees who have joined in a particular data range from the payroll service database
 ### Use Case:6
 #### Ability to find sum, average, min, max and number of male and female employees
+### Use Case:7
+#### Ability to add a new Employee to the Payroll

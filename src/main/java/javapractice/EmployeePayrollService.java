@@ -1,5 +1,6 @@
 package javapractice;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -87,11 +88,8 @@ public class EmployeePayrollService {
     }
 
 
-    public static void main(String[] args) {
-        ArrayList<EmployeePayrollData> employeePayrollDataArrayList = new ArrayList<>();
-        EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollDataArrayList);
-        Scanner sc = new Scanner(System.in);
-        employeePayrollService.readEmployeePayrollData(sc);
-        employeePayrollService.writeEmployeePayrollData(IOService.FILE_IO);
+    public void addEmployeeData(String name, String gender, double salary, LocalDate date) {
+        employeePayrollList.add(employeePayrollDBService.addEmployeeData(name,gender,salary,date));
     }
+
 }

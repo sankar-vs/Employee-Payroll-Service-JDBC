@@ -3,6 +3,7 @@ package javapractice;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -60,8 +61,17 @@ public class EmployeePayrollServiceTest {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
         List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
         Map<String, Double> result = employeePayrollService.filterDBPayrollData();
-        Assertions.assertEquals(2500000, result.get("M"));
-        Assertions.assertEquals(3000000, result.get("F"));
+        Assertions.assertEquals(2500000.0, result.get("M"));
+        Assertions.assertEquals(3000000.0, result.get("F"));
+    }
+
+    @Test
+    void givenNewEmployeeToEmployeeRollDB_whenAdded_shouldSyncWithDB () {
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
+        employeePayrollService.addEmployeeData("Tony","M",5000000.00, LocalDate.now());
+        boolean result = employeePayrollService.checkEmployeePayRollSyncWithDB("Tony");
+        Assertions.assertTrue(result);
     }
 
 }
