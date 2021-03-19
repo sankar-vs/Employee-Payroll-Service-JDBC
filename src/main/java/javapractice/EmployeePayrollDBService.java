@@ -129,12 +129,13 @@ public class EmployeePayrollDBService {
         return genderToAverageSalaryMap;
     }
 
-    public EmployeePayrollData addEmployeeData(String name, String gender, double salary, LocalDate date) {
+    public EmployeePayrollData addEmployeeData(String name, String gender, double salary, LocalDate date) throws SQLException {
         int id = -1;
         Connection connection = null;
         EmployeePayrollData employeePayrollData = null;
         try {
             connection = this.getConnection();
+            connection.setAutoCommit(false);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -148,6 +149,7 @@ public class EmployeePayrollDBService {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            connection.rollback();
         }
         try (Statement statement = connection.createStatement()) {
             double deductions = salary * 0.2;
@@ -162,6 +164,16 @@ public class EmployeePayrollDBService {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            connection.rollback();
+        }
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
         return employeePayrollData;
     }
