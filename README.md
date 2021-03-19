@@ -13,3 +13,5 @@
 #### Ability to find sum, average, min, max and number of male and female employees
 ### Use Case:7
 #### Ability to add a new Employee to the Payroll
+### Use Case:8
+#### Ability to also add to payroll details when a new Employee is added to the Payroll

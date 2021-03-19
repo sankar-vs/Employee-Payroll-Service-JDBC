@@ -131,17 +131,35 @@ public class EmployeePayrollDBService {
 
     public EmployeePayrollData addEmployeeData(String name, String gender, double salary, LocalDate date) {
         int id = -1;
-        String sql = String.format("insert into employee_payroll (name,gender,salary,start) values ('%s','%s','%s','%s')", name, gender, salary, Date.valueOf(date));
+        Connection connection = null;
         EmployeePayrollData employeePayrollData = null;
-        try (Connection connection = this.getConnection()) {
-            Statement statement = connection.createStatement();
+        try {
+            connection = this.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String sql = String.format("insert into employee_payroll (name,gender,salary,start) values ('%s','%s','%s','%s')", name, gender, salary, Date.valueOf(date));
+        try (Statement statement = connection.createStatement()) {
             int rowAffected = statement.executeUpdate(sql,statement.RETURN_GENERATED_KEYS);
             if (rowAffected == 1) {
                 ResultSet resultSet = statement.getGeneratedKeys();
                 if (resultSet.next())
                     id = resultSet.getInt(1);
             }
-            employeePayrollData = new EmployeePayrollData(id, name, gender, salary, date);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try (Statement statement = connection.createStatement()) {
+            double deductions = salary * 0.2;
+            double taxable_pay = salary - deductions;
+            double tax = taxable_pay * 0.1;
+            double netpay = salary - tax;
+            sql = String.format("INSERT INTO netpay_payroll (employee_id, basic_pay, deductions, taxable_pay, tax, netpay)" +
+                    " VALUES (%s,%s,%s,%s,%s,%s)", id, salary, deductions, taxable_pay, tax, netpay);
+            int rowAffected = statement.executeUpdate(sql);
+            if (rowAffected == 1) {
+                employeePayrollData = new EmployeePayrollData(id, name, gender, salary, date);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
