@@ -129,8 +129,8 @@ public class EmployeePayrollDBService {
         return genderToAverageSalaryMap;
     }
 
-    public EmployeePayrollData addEmployeeData(String name, String gender, double salary, LocalDate date) throws SQLException {
-        int id = -1;
+    public EmployeePayrollData addEmployeeData(String name, String gender, double salary, LocalDate date, String department) throws SQLException {
+        int id = -1, dep_id = -1;
         Connection connection = null;
         EmployeePayrollData employeePayrollData = null;
         try {
@@ -157,7 +157,14 @@ public class EmployeePayrollDBService {
             double tax = taxable_pay * 0.1;
             double netpay = salary - tax;
             sql = String.format("INSERT INTO netpay_payroll (employee_id, basic_pay, deductions, taxable_pay, tax, netpay)" +
-                    " VALUES (%s,%s,%s,%s,%s,%s)", id, salary, deductions, taxable_pay, tax, netpay);
+                    " VALUE (%s,%s,%s,%s,%s,%s)", id, salary, deductions, taxable_pay, tax, netpay);
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            connection.rollback();
+        }
+        try (Statement statement = connection.createStatement()) {
+            sql = String.format("INSERT INTO department_payroll (employee_id, department_name) value (%s,'%s')", id, department);
             int rowAffected = statement.executeUpdate(sql);
             if (rowAffected == 1) {
                 employeePayrollData = new EmployeePayrollData(id, name, gender, salary, date);

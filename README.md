@@ -15,3 +15,5 @@
 #### Ability to add a new Employee to the Payroll
 ### Use Case:8
 #### Ability to also add to payroll details when a new Employee is added to the Payroll
+### Use Case:9
+#### Implement the complete ER Diagram in the Database

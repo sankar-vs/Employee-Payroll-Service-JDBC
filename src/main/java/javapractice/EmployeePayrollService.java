@@ -89,8 +89,8 @@ public class EmployeePayrollService {
     }
 
 
-    public void addEmployeeData(String name, String gender, double salary, LocalDate date) throws SQLException {
-        employeePayrollList.add(employeePayrollDBService.addEmployeeData(name,gender,salary,date));
+    public void addEmployeeData(String name, String gender, double salary, LocalDate date, String department) throws SQLException {
+        employeePayrollList.add(employeePayrollDBService.addEmployeeData(name,gender,salary,date,department));
     }
 
 }

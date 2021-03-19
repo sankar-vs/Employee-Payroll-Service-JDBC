@@ -37,7 +37,7 @@ public class EmployeePayrollServiceTest {
     public void givenEmployeePayrollInDB_WhenRetrieved_ShouldMatchEmployeeCount() {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
         List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
-        Assertions.assertEquals(3, employeePayrollData.size());
+        Assertions.assertEquals(9, employeePayrollData.size());
     }
 
     @Test
@@ -52,7 +52,6 @@ public class EmployeePayrollServiceTest {
     @Test
     void givenDateRangeToEmployeePayRollInDB_WhenRetrieved_ShouldMatchFilteredEmployeeCount() {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
         List<EmployeePayrollData> filteredResult = employeePayrollService.readDateRangeDBPayrollData("2018-01-01", "2019-12-22");
         Assertions.assertEquals(2, filteredResult.size());
     }
@@ -60,18 +59,17 @@ public class EmployeePayrollServiceTest {
     @Test
     void givenPayrollData_WhenAverageSalaryRetrievedByGender_ShouldReturnProperTable() {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
         Map<String, Double> result = employeePayrollService.filterDBPayrollData();
         Assertions.assertEquals(2500000.0, result.get("M"));
-        Assertions.assertEquals(3000000.0, result.get("F"));
+        Assertions.assertEquals(3333333.3333333335, result.get("F"));
     }
 
     @Test
     void givenNewEmployeeToEmployeeRollDB_whenAdded_shouldSyncWithDB () throws SQLException {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
         List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
-        employeePayrollService.addEmployeeData("Tony","M",5000000.00, LocalDate.now());
-        boolean result = employeePayrollService.checkEmployeePayRollSyncWithDB("Tony");
+        employeePayrollService.addEmployeeData("Megan","F",6000000.00, LocalDate.now(), "HR");
+        boolean result = employeePayrollService.checkEmployeePayRollSyncWithDB("Megan");
         Assertions.assertTrue(result);
     }
 
