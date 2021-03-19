@@ -9,3 +9,5 @@
 #### Ability to update the salary i.e. the base pay for Employee Terisa to 3000000.00 and sync it with Database using JDBC PreparedStatement
 ### Use Case:5
 #### Ability to retrieve all employees who have joined in a particular data range from the payroll service database
+### Use Case:6
+#### Ability to find sum, average, min, max and number of male and female employees
