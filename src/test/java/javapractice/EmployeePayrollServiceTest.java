@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static javapractice.EmployeePayrollService.IOService.*;
 
@@ -55,10 +56,12 @@ public class EmployeePayrollServiceTest {
     }
 
     @Test
-    void givenPayrollData_WhenAverageSalaryRetrievedByGender_ShouldReturnProperValue() {
+    void givenPayrollData_WhenAverageSalaryRetrievedByGender_ShouldReturnProperTable() {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
         List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
-        double average = employeePayrollService.filterDBPayrollData("M");
-        Assertions.assertEquals(2500000, average);
+        Map<String, Double> result = employeePayrollService.filterDBPayrollData();
+        Assertions.assertEquals(2500000, result.get("M"));
+        Assertions.assertEquals(3000000, result.get("F"));
     }
+
 }

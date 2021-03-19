@@ -2,6 +2,7 @@ package javapractice;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class EmployeePayrollService {
@@ -81,9 +82,8 @@ public class EmployeePayrollService {
         return employeePayrollDBService.getFilteredDateRangeResult(dateBefore, dateAfter);
     }
 
-
-    public double filterDBPayrollData(String gender) {
-        return employeePayrollDBService.getAverageSalaryGroupByGender(gender);
+    public Map<String, Double> filterDBPayrollData() {
+        return employeePayrollDBService.getAverageSalaryGroupByGender();
     }
 
 
