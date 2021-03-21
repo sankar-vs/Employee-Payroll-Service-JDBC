@@ -68,8 +68,8 @@ public class EmployeePayrollServiceTest {
     void givenNewEmployeeToEmployeeRollDB_whenAdded_shouldSyncWithDB () throws SQLException {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
         List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
-        employeePayrollService.addEmployeeData("Megan","F",6000000.00, LocalDate.now(), "HR");
-        boolean result = employeePayrollService.checkEmployeePayRollSyncWithDB("Megan");
+        employeePayrollService.addEmployeeData("Alice","F",1000000.00, LocalDate.now(), new String[] {"HR", "Marketing"});
+        boolean result = employeePayrollService.checkEmployeePayRollSyncWithDB("Alice");
         Assertions.assertTrue(result);
     }
 

@@ -8,7 +8,16 @@ public class EmployeePayrollData {
     String name;
     Double salary;
     LocalDate date;
-    String gender;
+    String gender;String[] department;
+
+    public EmployeePayrollData(int id, String name, String gender, Double salary, LocalDate date, String[] department) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.salary = salary;
+        this.date = date;
+        this.department = department;
+    }
 
     public EmployeePayrollData(int id, String name, String gender, Double salary, LocalDate date) {
         this.id = id;
