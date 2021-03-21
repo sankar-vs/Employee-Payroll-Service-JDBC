@@ -128,7 +128,7 @@ public class EmployeePayrollDBService {
     }
 
     public EmployeePayrollData addEmployeeData(String name, String gender, double salary, LocalDate date, String[] department) throws SQLException {
-        int id = -1, dep_id = -1;
+        int id = -1;
         Connection connection = null;
         EmployeePayrollData employeePayrollData = null;
         try {
@@ -168,6 +168,39 @@ public class EmployeePayrollDBService {
             }
             employeePayrollData = new EmployeePayrollData(id, name, gender, salary, date, department);
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            connection.rollback();
+        }
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return employeePayrollData;
+    }
+
+    public EmployeePayrollData removeEmployeeData(String name, List<EmployeePayrollData> employeePayrollList) throws SQLException {
+        Connection connection = null;
+        EmployeePayrollData employeePayrollData = null;
+        try {
+            connection = this.getConnection();
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String sql = String.format("DELETE FROM employee_payroll WHERE name = '%s';", name);
+        try (Statement statement = connection.createStatement()) {
+            int rowAffected = statement.executeUpdate(sql);
+            if (rowAffected == 1) {
+                employeePayrollData = employeePayrollList.stream()
+                                .filter(e -> e.name.equals(name))
+                                .findFirst().orElse(null);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             connection.rollback();

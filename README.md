@@ -17,3 +17,9 @@
 #### Ability to also add to payroll details when a new Employee is added to the Payroll
 ### Use Case:9
 #### Implement the complete ER Diagram in the Database
+### Use Case:10
+#### Ensure UC 2 – UC 7 works with the new ER Diagram implemented into Payroll Service DB
+### Use Case:11
+#### Ability to add a new Employee to the Payroll
+### Use Case:12
+#### Ability to remove Employee from the Payroll

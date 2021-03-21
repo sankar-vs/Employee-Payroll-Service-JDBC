@@ -88,9 +88,12 @@ public class EmployeePayrollService {
         return employeePayrollDBService.getAverageSalaryGroupByGender();
     }
 
-
     public void addEmployeeData(String name, String gender, double salary, LocalDate date, String[] department) throws SQLException {
         employeePayrollList.add(employeePayrollDBService.addEmployeeData(name,gender,salary,date,department));
+    }
+
+    public void deleteEmployeeData(String name) throws SQLException {
+        employeePayrollList.remove(employeePayrollDBService.removeEmployeeData(name, employeePayrollList));
     }
 
 }

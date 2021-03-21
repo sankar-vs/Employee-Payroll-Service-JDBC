@@ -73,4 +73,15 @@ public class EmployeePayrollServiceTest {
         Assertions.assertTrue(result);
     }
 
+    @Test
+    void givenEmployeeNameToEmployeeRollDB_shouldDelete_shouldSyncWithDB () throws SQLException {
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
+        employeePayrollService.deleteEmployeeData("Alice");
+        List<EmployeePayrollData> employeePayrollDataDeleted = employeePayrollService.readDBEmployeePayrollData(DB_IO);
+        Assertions.assertNull(employeePayrollDataDeleted.stream()
+                .filter(e -> e.name.equals("Alice"))
+                .findFirst().orElse(null));
+    }
+
 }
