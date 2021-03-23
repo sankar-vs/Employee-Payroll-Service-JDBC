@@ -27,3 +27,5 @@
 #### Ability to add multiple employees to payroll DB
 ### Use Case:13.2 MultiThread Concept
 #### Ability to add multiple employees to payroll DB using Threads, as to get a better response time
+### Use Case:13.3 MultiThread Concept
+#### Ability to add multiple employees to payroll DB using Threads, as to get a better response

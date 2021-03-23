@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class EmployeePayrollDBService {
+    private int connectionCounter = 0;
     private PreparedStatement employeePayRollDataStatement;
     private static EmployeePayrollDBService employeePayrollDBService;
 
@@ -18,11 +19,16 @@ public class EmployeePayrollDBService {
     }
 
     public Connection getConnection() throws SQLException {
+        connectionCounter++;
         String jdbcULR = "jdbc:mysql://localhost:3306/payroll_service?useSSL=false";
         String userName = "root";
         String password = "root7433";
         Connection connection = null;
+        System.out.println("Processing Thread: " + Thread.currentThread().getName()+
+                "Connection To DB With ID: " + connectionCounter);
         connection = DriverManager.getConnection(jdbcULR,userName,password);
+        System.out.println("Processing Thread: " + Thread.currentThread().getName()+
+                "ID: " + connectionCounter+ " Connection SuccessFul..!!" + connection);
         return connection;
     }
 

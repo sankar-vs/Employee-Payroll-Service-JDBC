@@ -120,15 +120,12 @@ public class EmployeePayrollServiceTest {
                 new EmployeePayrollData(0, "Anil", "M", 5000000.00, LocalDate.now(), new String[] {"QM"}),
         };
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
-        Instant start = Instant.now();
-        employeePayrollService.addEmployeesToPayroll(Arrays.asList(payrollData));
-        Instant end = Instant.now();
-        System.out.println("Duration without thread  "+ Duration.between(start, end));
+        employeePayrollService.readDBEmployeePayrollData(DB_IO);
         Instant threadStart = Instant.now();
         employeePayrollService.addEmployeesToPayrollWithThreads(Arrays.asList(payrollData));
         Instant threadEnd = Instant.now();
-        System.out.println("Duration without thread  "+ Duration.between(threadStart, threadEnd));
+        System.out.println("Duration with thread  "+ Duration.between(threadStart, threadEnd));
         Assertions.assertEquals(11,employeePayrollService.countEntries(DB_IO));
     }
+
 }
