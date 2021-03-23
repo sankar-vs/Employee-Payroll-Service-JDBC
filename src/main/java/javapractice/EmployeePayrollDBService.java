@@ -22,9 +22,7 @@ public class EmployeePayrollDBService {
         String userName = "root";
         String password = "root7433";
         Connection connection = null;
-//        System.out.println("Connecting To DB: " + jdbcULR);
         connection = DriverManager.getConnection(jdbcULR,userName,password);
-//        System.out.println("Connection is successful..! " + connection);
         return connection;
     }
 

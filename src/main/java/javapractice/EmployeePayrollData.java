@@ -41,4 +41,10 @@ public class EmployeePayrollData {
                 && Objects.equals(gender, that.gender);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, gender, salary, date, department);
+    }
+
+
 }

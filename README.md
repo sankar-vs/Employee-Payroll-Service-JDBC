@@ -25,3 +25,5 @@
 #### Ability to remove Employee from the Payroll
 ### Use Case:13.1 MultiThread Concept
 #### Ability to add multiple employees to payroll DB
+### Use Case:13.2 MultiThread Concept
+#### Ability to add multiple employees to payroll DB using Threads, as to get a better response time

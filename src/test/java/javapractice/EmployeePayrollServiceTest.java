@@ -108,7 +108,27 @@ public class EmployeePayrollServiceTest {
         employeePayrollService.addEmployeesToPayroll(Arrays.asList(payrollData));
         Instant end = Instant.now();
         System.out.println("Duration without thread  "+ Duration.between(start, end));
-        Assertions.assertEquals(11,employeePayrollService.countEntries(DB_IO));
     }
 
+    @Test
+    void givenNewEmployeeToEmployeeRollDB_whenAdded_shouldMatchWithEntriesUsingThread () {
+        EmployeePayrollData[] payrollData = {
+                new EmployeePayrollData(0, "Jeff", "M", 1000000.00, LocalDate.now(), new String[] {"HR"}),
+                new EmployeePayrollData(0, "Bill", "M", 2000000.00, LocalDate.now(), new String[] {"QM"}),
+                new EmployeePayrollData(0, "Sunder", "M", 4000000.00, LocalDate.now(), new String[] {"Sales"}),
+                new EmployeePayrollData(0, "Mukesh", "M", 4400000.00, LocalDate.now(), new String[] {"Marketing"}),
+                new EmployeePayrollData(0, "Anil", "M", 5000000.00, LocalDate.now(), new String[] {"QM"}),
+        };
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
+        Instant start = Instant.now();
+        employeePayrollService.addEmployeesToPayroll(Arrays.asList(payrollData));
+        Instant end = Instant.now();
+        System.out.println("Duration without thread  "+ Duration.between(start, end));
+        Instant threadStart = Instant.now();
+        employeePayrollService.addEmployeesToPayrollWithThreads(Arrays.asList(payrollData));
+        Instant threadEnd = Instant.now();
+        System.out.println("Duration without thread  "+ Duration.between(threadStart, threadEnd));
+        Assertions.assertEquals(11,employeePayrollService.countEntries(DB_IO));
+    }
 }
