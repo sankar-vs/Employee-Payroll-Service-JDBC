@@ -3,7 +3,10 @@ package javapractice;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +41,13 @@ public class EmployeePayrollServiceTest {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
         List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
         Assertions.assertEquals(5, employeePayrollData.size());
+    }
+
+    @Test
+    public void testConnectivity() throws SQLException {
+        EmployeePayrollDBService employeePayrollDBService = new EmployeePayrollDBService();
+        Connection connectivity = employeePayrollDBService.getConnection();
+        Assertions.assertNotNull(connectivity);
     }
 
     @Test
@@ -82,6 +92,23 @@ public class EmployeePayrollServiceTest {
         Assertions.assertNull(employeePayrollDataDeleted.stream()
                 .filter(e -> e.name.equals("Alice"))
                 .findFirst().orElse(null));
+    }
+    @Test
+    void givenNewEmployeeToEmployeeRollDB_whenAdded_shouldMatchWithEntries () {
+        EmployeePayrollData[] payrollData = {
+                new EmployeePayrollData(0, "Jeff", "M", 1000000.00, LocalDate.now(), new String[] {"HR"}),
+                new EmployeePayrollData(0, "Bill", "M", 2000000.00, LocalDate.now(), new String[] {"QM"}),
+                new EmployeePayrollData(0, "Sunder", "M", 4000000.00, LocalDate.now(), new String[] {"Sales"}),
+                new EmployeePayrollData(0, "Mukesh", "M", 4400000.00, LocalDate.now(), new String[] {"Marketing"}),
+                new EmployeePayrollData(0, "Anil", "M", 5000000.00, LocalDate.now(), new String[] {"QM"}),
+        };
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readDBEmployeePayrollData(DB_IO);
+        Instant start = Instant.now();
+        employeePayrollService.addEmployeesToPayroll(Arrays.asList(payrollData));
+        Instant end = Instant.now();
+        System.out.println("Duration without thread  "+ Duration.between(start, end));
+        Assertions.assertEquals(11,employeePayrollService.countEntries(DB_IO));
     }
 
 }

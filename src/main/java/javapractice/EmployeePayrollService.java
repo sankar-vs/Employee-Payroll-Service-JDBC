@@ -53,7 +53,7 @@ public class EmployeePayrollService {
     public long countEntries(IOService ioService) {
         if (ioService.equals(IOService.FILE_IO))
             return new EmployeePayrollFileIOService().countEntries();
-        return 0;
+        return employeePayrollList.size();
     }
 
     public List<EmployeePayrollData> readDBEmployeePayrollData(IOService ioService) {
@@ -94,6 +94,20 @@ public class EmployeePayrollService {
 
     public void deleteEmployeeData(String name) throws SQLException {
         employeePayrollList.remove(employeePayrollDBService.removeEmployeeData(name, employeePayrollList));
+    }
+
+
+    public void addEmployeesToPayroll(List<EmployeePayrollData> employeePayrollDataList) {
+        employeePayrollDataList.forEach(x -> {
+            //System.out.println("Employee Being Added: " + e.name);
+            try {
+                this.addEmployeeData(x.name, x.gender, x.salary, x .date, x.department);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+//            //System.out.println("Employee Added: " + e.name);
+        });
+//        System.out.println(this.employeePayrollList);
     }
 
 }

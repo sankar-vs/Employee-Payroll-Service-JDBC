@@ -11,19 +11,13 @@ public class EmployeePayrollData {
     String gender;String[] department;
 
     public EmployeePayrollData(int id, String name, String gender, Double salary, LocalDate date, String[] department) {
-        this.id = id;
-        this.name = name;
-        this.gender = gender;
-        this.salary = salary;
-        this.date = date;
+        this(id, name, gender, salary, date);
         this.department = department;
     }
 
     public EmployeePayrollData(int id, String name, String gender, Double salary, LocalDate date) {
-        this.id = id;
-        this.name = name;
+        this(id, name, salary);
         this.gender = gender;
-        this.salary = salary;
         this.date = date;
     }
 

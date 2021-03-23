@@ -9,7 +9,7 @@ public class EmployeePayrollDBService {
     private PreparedStatement employeePayRollDataStatement;
     private static EmployeePayrollDBService employeePayrollDBService;
 
-    private EmployeePayrollDBService(){}
+    public EmployeePayrollDBService(){}
 
     public static EmployeePayrollDBService getInstance(){
         if (employeePayrollDBService==null)
@@ -17,14 +17,14 @@ public class EmployeePayrollDBService {
         return employeePayrollDBService;
     }
 
-    private Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         String jdbcULR = "jdbc:mysql://localhost:3306/payroll_service?useSSL=false";
         String userName = "root";
         String password = "root7433";
-        Connection connection;
-        System.out.println("Connecting To DB: " + jdbcULR);
+        Connection connection = null;
+//        System.out.println("Connecting To DB: " + jdbcULR);
         connection = DriverManager.getConnection(jdbcULR,userName,password);
-        System.out.println("Connection is successful..! " + connection);
+//        System.out.println("Connection is successful..! " + connection);
         return connection;
     }
 
