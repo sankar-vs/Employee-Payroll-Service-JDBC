@@ -18,7 +18,7 @@ public class EmployeePayrollDBService {
         return employeePayrollDBService;
     }
 
-    public Connection getConnection() throws SQLException {
+    public synchronized Connection getConnection() throws SQLException {
         connectionCounter++;
         String jdbcULR = "jdbc:mysql://localhost:3306/payroll_service?useSSL=false";
         String userName = "root";
